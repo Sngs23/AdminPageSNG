@@ -2,7 +2,7 @@ import express from "express";
 import  path from 'path';
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import { methods as authentication } from "./controllers/authenticationController";
+import { methods as authentication } from "./controllers/authenticationController.js";
 //Server 
 const app = express();
 
@@ -13,12 +13,12 @@ console.log("server en puerto: ",app.get("port"));
 //Configuracion
 
 app.use(express.static(__dirname + "/public"));
-
+app.use(express.json());
 
 
 //Rutas
 app.get("/",(req,res)=> res.sendFile( __dirname + "/pages/login.html"));
 app.get("/register",(req,res)=> res.sendFile( __dirname + "/pages/register.html"));
 app.get("/admin",(req,res)=> res.sendFile( __dirname + "/pages/admin/admin.html"));
-app.get("/api/register",authentication.register);
-app.get("/api/login",authentication.login);
+app.post("/api/register",authentication.register);
+app.post("/api/login",authentication.login);
